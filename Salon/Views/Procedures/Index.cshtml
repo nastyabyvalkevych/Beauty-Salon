@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Procedure>
+
+@{
+    ViewData["Title"] = "Procedures";
+}
+
+<style>
+    img{
+        width:200px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .row{
+        margin:30px 10px 10px 10px;
+    }
+    h4{
+        text-align:center;
+        font-size:25px;
+        color: #3f3133;
+        padding:15px 10px 10px 10px;
+    }
+   .money{
+        text-align: center;
+    }
+    .btn{
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        color: pink;
+        font-size:15px;
+        padding:3px;
+    }
+
+    .btn:hover {
+        color:hotpink; /* Green */
+        
+        font-size:20px;
+    }
+    h4{
+        text-transform: uppercase;
+        font-family: 'Cormorant';
+        font-size: 24px;
+        text-align: center;
+        color: black
+    }
+</style>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <img src="~/media/procedures/@item.Image" class="img-fluid" alt="" />
+            <h4>@item.Name</h4>
+            <div>
+                @Html.Raw(item.Description)
+            </div>
+            <p class="money">
+                <a class="btn" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id"><i class="fa-solid fa-heart"></i></a>@item.Price.ToString("C2")
+            </p>
+            @*<p>
+                <a class="btn" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id"><i class="fa-regular fa-heart"></i></a>
+            </p>*@
+        </div>
+    }
+
+
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="d-flex w-100 justify-content-center">
+            <pagination page-count="@ViewBag.TotalPages"
+                    page-target="/procedures/@ViewBag.CategorySlug"
+                    page-number="@ViewBag.PageNumber"
+                    page-range="@ViewBag.PageRange">
+            </pagination>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,73 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+
+<style>
+    h1{
+        margin: 30px 10px 10px 400px;
+        color:pink;
+        margin: -10px 10px 10px 130px;
+        position: absolute;
+    }
+
+    .row{
+        width:400px;
+        margin: 60px 10px 30px 121px;
+         position:absolute;
+    }
+
+    .btn {
+        display: block;
+        font-size: 17px;
+        text-align: center;
+        padding: 10px 25px;
+        border-radius: 40px;
+        background-color: pink;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin: -270px 10px 30px -33px;
+        position: absolute;
+        top: 450px;
+        left: 50px;
+        color:white;
+    }
+
+ 
+
+    .btn:hover {
+        background-color: hotpink;
+        transform: scale(1.04);
+    }
+</style>
+<h1>Login   <i class="fa-solid fa-paw"></i></h1>
+
+@*<hr />*@
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Login">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="form-group">
+                <button class="btn">Log in</button>
+            </div>
+        </form>
+    </div>
+</div>

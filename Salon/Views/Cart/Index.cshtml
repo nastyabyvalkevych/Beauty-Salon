@@ -1,0 +1,217 @@
+﻿@model CartViewModel
+
+@{
+    ViewData["Title"] = "Cart Overview";
+}
+
+<style>
+    
+    .table{
+        width:800px;
+        margin:30px 10px 10px 250px;
+        background-color: #FCF6FB;
+        padding:10px 10px 10px 10px;
+        border-radius: 15px;
+        
+        position: relative;
+
+    }
+    /*.block{
+        display:block;
+        position: absolute;
+        background-color: #ffe9f4;
+        margin: 200px 10px 10px 10px;
+         padding:10px 10px 10px 10px;
+    }*/
+    .fa-paw{
+        color: black;
+        position: absolute;
+        margin:200px 10px 10px 10px;
+    }
+    button{
+        background-color: #FCF6FB;
+    }
+
+    modal-title{
+        text-align:center;
+        background-color: pink;
+    }
+  .thanks{
+        margin: 123px 10px 10px 277px ;
+  }
+
+  tr {
+    
+    border-style: none;
+    border-width: 0;
+  }
+
+   h1{
+    text-transform: uppercase;
+        font-family: 'Cormorant';
+       margin:50px 10px 10px 10px;
+        font-size: 40px;
+        text-align: center;
+        color: black;
+         position: relative;
+   }
+   h3{
+       text-transform: uppercase;
+        font-family: 'Cormorant';
+       
+        font-size: 30px;
+        text-align: center;
+        color: black;
+         position: relative;
+   }
+   .btn1 {
+          display: block;
+          font-size: 17px;
+          text-align: center;
+          padding: 10px 25px;
+          border-radius: 40px;
+          background-color: black;
+          -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
+          color:white;
+
+      }
+        .modal-footer {
+          padding: -10.25rem;
+        }
+            .btn1:hover {
+            background-color: pink;
+            transform: scale(1.04);
+        }
+        .modal-header {
+     text-transform: uppercase;
+            font-family: 'Cormorant';
+                color:black;
+               
+                font-size: 30px;
+        }
+    .modal-content {
+            border-radius: 30px;
+    }
+    h5{
+          font-size: 1.65rem;
+    }
+      .form-control {
+              border-radius: 30px;
+             
+              margin:4px;
+      }
+</style>
+<h1>Ваш запис</h1>
+@if (Model.CartItems.Count > 0)
+{
+
+    <table class="table">
+        
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.ProcedureName</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <a class="btn" asp-action="Add" asp-route-id="@item.ProcedureId"><i class="fa-solid fa-heart-circle-plus"></i></a>
+                    <a class="btn" asp-action="Decrease" asp-route-id="@item.ProcedureId"><i class="fa-solid fa-heart-circle-minus"></i></a>
+                    @*<a class="btn" asp-action="Remove" asp-route-id="@item.ProcedureId"><i class="fa-solid fa-trash"></i></a>*@
+                </td>
+                <td>@item.Price.ToString("C2")</td>
+                <td>@Model.CartItems.Where(x => x.ProcedureId == item.ProcedureId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
+            </tr>
+        }
+        <tr>
+            <td class="text-right" colspan="4">Всього: @Model.GrandTotal.ToString("C2")</td>
+        </tr>
+        <tr>
+            <td class="text-right" colspan="4">
+                <a class="btn" asp-action="Clear"><i class="fa-solid fa-trash"></i></a>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+Підтвердити запис
+				</button>
+               
+                <p class="thanks">
+                    Дякуємо, що обрали саме нас!
+				</p>
+			</td>
+        </tr>
+    </table>
+
+
+}
+else
+{
+    <h3 class="display-4 text-center">Ви нічого не обрали...</h3>
+}
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form asp-action="PostOrder" enctype="multipart/form-data">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Внесіть свої дані</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Order.Name" class="control-label">Ім'я</label>
+                    <input placeholder="Ваше ім'я" asp-for="Order.Name" class="form-control" />
+                    <span asp-validation-for="Order.Name" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Order.PhoneNumber" class="control-label">Моб. телефон</label>
+                    <input placeholder="+380 99-235-7979" asp-for="Order.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Order.ExecutionDate" class="control-label">Оберіть зручну дату та час</label>
+                    <input type="datetime-local" asp-for="Order.ExecutionDate" class="form-control" />
+                    <span asp-validation-for="Order.ExecutionDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Order.Comments" class="control-label">Побажання</label>
+                    <input type="text" asp-for="Order.Comments" class="form-control" />
+                    <span asp-validation-for="Order.Comments" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                        <label>Оберіть майстриню</label>
+                    <select asp-for="Order.Employee" class="form-control">
+                        <option value="0">...</option>
+                        <option>Катерина</option>
+                        <option>Ольга</option>
+                        <option>Анастасія</option>
+                    </select>
+                    <span asp-validation-for="Order.Employee" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                        <label>Спосіб оплати</label>
+                    <select asp-for="Order.PaymentType" class="form-control">
+                        <option value="0">...</option>
+                        <option>Картка</option>
+                        <option>Готівка</option>
+                    </select>
+                    <span asp-validation-for="Order.PaymentType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+               @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Припинити запис</button>*@
+                <button type="submit" class="btn1" data-bs-save="modal">Підтвердити</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+

@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Salon</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Salon.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant&family=Oswald:wght@200&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant&family=Oswald:wght@200&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b6fa1a5a18.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header id="header" class="header">
+        <div class="containers">
+            <div class="nav">
+				<a class="logo">RIVER</a>
+                <ul class="menu">
+					
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Головна</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Catalog">Прайс</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Contacts">Контакти</a>
+                    </li>
+                    <li>
+                            <div class="cart1">
+                                <vc:small-cart />
+                           </div>
+                    </li>
+                     @if (User.Identity?.IsAuthenticated ?? false)
+                     {
+                            
+                            <li>
+                                <a asp-area="Admin" asp-controller="Procedures" asp-action="Index"><i class="fa-solid fa-list"></i></a>
+							</li>
+							<li>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="Index"><i class="fa-solid fa-check-double"></i></a>
+							</li>
+                            <li >
+                            <a asp-controller="Account" asp-action="Logout"> <i class="fa-sharp fa-solid fa-door-open"></i></a>
+                            </li>
+                            
+
+                            @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+                            {
+                                <li >
+                                    <a asp-area="Admin" asp-controller="Procedures" asp-action="Index">Каталог</a>
+                                </li>
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Orders" asp-action="Index">Order</a>
+                                </li>
+                               
+                            }
+                     }
+                        else
+                        {
+                            <li>
+                            <a asp-controller="Account" asp-action="Login"><i class="fa-regular fa-user"></i></a>
+                            </li>
+                        }
+                      
+               </ul>
+                <a href="tel:+380992357967" class="telephone">
+                    +38(099) 235 7967
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="row">
+                <div class="col">
+                    <partial name="_NotificationPartial" />
+                    @RenderBody()
+                </div>
+            </div>
+        </main>
+    </div>
+   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

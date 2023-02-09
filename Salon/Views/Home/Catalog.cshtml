@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Catalog";
+}
+
+
+ <style>
+
+    .containers {
+        width: 1170px;
+        margin: 0 auto;
+        
+    }
+    body{
+       
+        position:relative;
+    }
+    .header{
+    background-color:white ;
+    }
+    .col-3{
+        margin-top:150px;
+       position:absolute;
+       margin-left:80px;
+    }
+    .photoadvert{
+        margin: 60px 10px 10px 850px;
+        position:absolute;
+        opacity:0.65;
+    }
+
+    .photoadvert2 {
+      margin: 148px 10px 10px 600px;
+        position: absolute;
+        opacity: 0.65;
+    }
+   .cart12{
+        background-color: #ffe9f4;
+        margin: 50px 10px 10px 10px;
+        padding: 10px 10px 10px 10px;
+        border-radius:20px;
+   }
+   p{
+       margin:10px 10px 10px 10px;
+       color:black;
+      /*  padding: 10px 10px 10px 10px;*/
+   }
+
+    .list-group {
+        border-radius: 3.25rem;
+    }
+ }
+ </style>
+
+<div class="col-3">
+    <vc:categories />
+   @* <div class="cart12">
+        <vc:small-cart />
+    </div>*@
+</div>
+
+<div class="photoadvert">
+    <img src="~/Photo/back1.jpg" width="350" />
+</div>
+<div class="photoadvert2">
+    <img src="~/Photo/back2.jpg" width="350" />
+</div>

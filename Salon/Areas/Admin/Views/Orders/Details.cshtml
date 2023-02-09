@@ -1,0 +1,172 @@
+﻿@model OrderViewModel
+
+@{
+    ViewData["Title"] = "Інформація про запис";
+}
+
+<style>
+    .card{
+        border-radius:30px;
+        background-color: #FCF6FB;
+    }
+  
+    .tittle{
+        text-transform: uppercase;
+        font-family: 'Cormorant';
+        font-size: 18px;
+        text-align: center;
+        color: black;
+        margin: 5px;
+    }
+    .container{
+        padding: 10px 123px 10px 120px;
+    }
+    h4{
+       
+        color: black;
+        
+        font-size:15px;
+    }
+    .btn{
+        font-size:20px;
+    }
+</style>
+
+<form method="post">
+    @if (Model.OrderDetails.Count() > 0)
+    {
+        <br />
+        <div class="backgroundWhite container">
+            <div class="card">
+                <div class="card-header">
+                    <div class="tittle">
+                        Клієнт @Model.OrderModel.Id
+                    </div>
+                    @*<div class="col-12 col-md-4 offset-md-2 text-right">
+                        <a asp-action="Index" class="btn btn-outline-info form-control btn-sm">Back to Orders</a>
+                    </div>*@
+                </div>
+                <div class="card-body">
+                    <div class="container rounded p-2">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 pb-4">
+                                <div class="row">
+                                    @*<h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-primary">Інформація про замовника:</span>
+                                    </h4>*@
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Ім'я</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderModel.Name" readonly type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Телефон</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderModel.PhoneNumber" type="text" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Майстер</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderModel.Employee" type="text" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Дата</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderModel.OrderDate" type="date" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                @*<div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Дата виконання</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderModel.ExecutionDate" type="text" readonly class="form-control" />
+                                    </div>
+                                </div>*@
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Олата</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderModel.PaymentType" type="text" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Побажання</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderModel.Comments" readonly type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-5 offset-lg-1">
+                                
+                                <ul class="list-group mb-3">
+                                    @{
+                                        var total = 0.0;
+                                    }
+
+                                    @foreach (var details in Model.OrderDetails)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <div>
+                                                <input type="hidden" asp-for="@details.Id" />
+                                                <h6 class="my-0">@details.ProcedureName</h6>
+                                                <small class="text-muted">Ціна : @details.Price</small>
+                                               
+                                            </div>
+                                        </li>
+                                        total += (Double)details.Price * details.Quantity;
+                                    }
+                                </ul>
+                                <h4 >
+                                    До сплати: @total.ToString("C2")
+                                </h4>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        @if (Model.OrderModel.Status != "...")
+                        {
+                            <div class="col2">
+                                <h4>@Model.OrderModel.Status </h4>
+                            </div>
+                        }
+                        else 
+                        {
+                            <div class="col1 ">
+                                <a asp-action="Approve" asp-route-id="@Model.OrderModel.Id" class="btn"><i class="fa-solid fa-person-circle-check"></i></a>
+
+                                <a asp-action="Reject" asp-route-id="@Model.OrderModel.Id" class="btn "><i class="fa-solid fa-person-circle-minus"></i></a>
+                            </div>
+                        }
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="backgroundWhite"> Замовлення порожні...</div>
+    }
+</form>
+
+

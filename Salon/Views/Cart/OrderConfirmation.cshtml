@@ -1,0 +1,44 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Підтвердження замовлення";
+}
+<style>
+    h1{
+        text-transform: uppercase;
+        font-family: 'Cormorant';
+        font-size: 35px;
+        text-align: center;
+        color: black;
+        margin:30px;
+    }
+    p{
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        color:dimgray;
+  
+    }
+    .photo{
+        display: block;
+        margin: 100px 20px 20px 415px;
+        position: absolute;
+        opacity:0.5;
+        border-radius:30px;
+    }
+</style>
+<div class="container">
+    <div>
+        <h1>Успішне підтвердження запису!</h1>
+    </div>
+    <div class="happy">
+        <p>
+            За день до вашого запису ви отримаєте смс-нагадування.<br />Ми піклуємося про кожного нашого клієнта!<br />
+			Наші дівчатка чекають на вас   <i class="fa-solid fa-paw"></i> <br />
+            <img src="~/Photo/cat.jpg" style="width:400px; " class="photo" />
+		</p>
+
+    </div>
+    <p>
+        Ваше щасливе число - @Model</p>
+</div>
